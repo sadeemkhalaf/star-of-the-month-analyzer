@@ -1,0 +1,2 @@
+export const reformatNameString = (value: string) => value.toLocaleLowerCase().replace(' ', '');
+export const reformatName = (value: string) => value.toLocaleLowerCase().split(',').reverse().join().replace(' ', '').replace(',', '');
