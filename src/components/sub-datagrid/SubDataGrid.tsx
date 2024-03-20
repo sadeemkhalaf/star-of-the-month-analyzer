@@ -2,7 +2,6 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { IResponsesOtherCases } from '../../main/shared/model';
-import { useEffect } from 'react';
 
 export enum DatagridType {
     selfVoted = 'SELF-VOTED',
