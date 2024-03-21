@@ -13,13 +13,13 @@ export const columnsSelfVoted: GridColDef<IResponsesOtherCases>[] = [
     {
         headerName: 'Name',
         field: 'name',
-        width: 200,
+        width: 150,
         editable: false,
     },
     {
         field: 'ratingCount',
-        headerName: 'How many times',
-        width: 90,
+        headerName: 'How many times?',
+        width: 150,
         editable: false,
     },
 ];
@@ -34,7 +34,7 @@ export const columnsVotedFrequently: GridColDef<IResponsesOtherCases>[] = [
     },
     {
         field: 'ratingCount',
-        headerName: 'How many times',
+        headerName: 'How many stars?',
         width: 150,
         editable: false,
     },

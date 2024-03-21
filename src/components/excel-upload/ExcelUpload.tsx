@@ -17,7 +17,7 @@ export const ExcelUpload: FC<{ sheetData?: any[], setSheetData: React.Dispatch<a
             const sheetName = workbook.SheetNames[0];
             const sheet = workbook.Sheets[sheetName];
             const jsonData = utils.sheet_to_json<any>(sheet);
-            setSheetData(jsonData);
+            setSheetData(jsonData);            
         };
         fileReader.readAsArrayBuffer(file as unknown as Blob);
     };

@@ -26,14 +26,14 @@ function App() {
         if (row.rating + totalStars <= 5) {
           totalStars += row.rating;
           filteredList.push(row);
-        } else if (totalStars < 5) {
+        } else if (totalStars < 5 && (row.rating + totalStars > 5)) {
           // truncation 
           let amountLeft = 5 - totalStars;
-          filteredList.push({...row, rating: amountLeft});
+          filteredList.push({ ...row, rating: amountLeft });
         }
       })
     } else {
-      filteredList.push(...filteredList);
+      responses.forEach((row) => filteredList.push(row))
     }
     const filtered = filteredList.map((row) => ({ ID: row.ID, whom: row.whom, rating: row.rating, feedback: !!row.feedback ? { givenBy: row.name, feedback: row.feedback } : null } as IResponsesResult))
     setResult(prev => [...prev, ...filtered]);
@@ -51,6 +51,7 @@ function App() {
     } else {
       grouped = _lodash.groupBy(sheetData, 'name');
     }
+
     for (const name in grouped) {
       checkGivenStars(grouped[name]);
     }
@@ -73,23 +74,27 @@ function App() {
       const mappedResults = _lodash.mapValues(_lodash.groupBy(result, 'whom'), (rows) => {
         const totalRating = _lodash.sumBy(rows, 'rating');
         const concatenatedFeedback = _lodash.map(rows, item => item.feedback).filter(item => !!item);
-        
+
         idx += 1;
         return { rating: totalRating, feedback: concatenatedFeedback, ID: idx };
       });
       const finalRes = _lodash.map(mappedResults, (value, key) => ({ whom: key, ...value }));
-      
       setFinalist(finalRes);
       setTimeout(() => {
         setLoading(false)
       }, 320);
     }
+
   }, [result])
 
   return (
     <div className={`flex flex-1 flex-col px-5 xl:px-48 lg:px-32 mb-24`}>
       <div className='py-8 w-full flex justify-between items-center'>
-        <div className='text-lg text-gray-800 font-semibold'>{'Star of the Month Analyzer'}</div>
+        <div>
+          <div className='text-3xl text-gray-800 font-normal'>{'Star of the Month'}</div>
+          <div className='text-lg text-gray-800 font-bold'>{'Analyzer'}</div>
+        </div>
+
         <img src={require('./assets/deloittedigital-logo.png')} alt="deloittedigital" className='w-[160px]' />
       </div>
       <div className='w-full h-full flex justify-between items-center flex-row py-4 border-b-[0.5px] border-b-black bg-white rounded-md p-3'>
