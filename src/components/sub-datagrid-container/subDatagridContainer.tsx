@@ -57,7 +57,7 @@ const SubDatagridContainer = ({ sheetdata }: SubDatagridContainerProps) => {
 
 
     return (
-        <div className="flex flex-row justify-between items-center gap-4 bg-white p-4 rounded-md">
+        <div className="flex flex-row justify-between items-start gap-4 bg-white p-4 rounded-md">
             <div className="w-full">
                 <label className="text-lg font-semibold">{'Voted for themselves'}</label>
                 <SubDataGrid rows={selfVotedList} votingType={DatagridType.selfVoted} />

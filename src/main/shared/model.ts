@@ -7,20 +7,21 @@ export interface IResponses {
   name: string;
   rating: number;
   whom: string;
+  category: string;
 }
 
 export interface IResponsesResult {
   ID: number;
   whom: string;
   rating: number;
-  feedback: {givenBy: string, feedback: string};
+  feedback: {givenBy: string, feedback: string, category: string};
 }
 
 export interface IResponsesFinalResult {
   ID: number;
   whom: string;
   rating: number;
-  feedback: {givenBy: string, feedback: string}[];
+  feedback: {givenBy: string, feedback: string, category: string}[];
 }
 
 export interface IResponsesOtherCases {

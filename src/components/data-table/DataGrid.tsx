@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import { DataGrid, GridColDef, GridRowParams } from '@mui/x-data-grid';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Slide } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
+import * as _ from 'lodash';
 
 // ID	
 // Start time
@@ -66,17 +67,21 @@ export const columnsRes: GridColDef[] = [
     {
         field: 'feedback',
         headerName: 'Feedback count',
-        width: 500,
+        width: 200,
         editable: false,
         resizable: true,
-        renderCell: (params) => {
-            const listOfFeedback = params.value;
-            return (<div>
-                {`${listOfFeedback?.length}  -  `}
-                <span className='text-blue-700 my-2'>{' Show more '}</span>
-            </div>)
-        },
-    }
+        type: 'actions',
+        renderCell: (params) => <CustomShowMoreCell params={params} />,
+    },
+    {
+        field: 'category',
+        headerName: 'Category',
+        width: 300,
+        editable: false,
+        resizable: true,
+        type: 'string',
+        renderCell: (params) => <CustomCategoryList params={params} />,
+    },
 ];
 
 const Transition = React.forwardRef(function Transition(
@@ -88,14 +93,24 @@ const Transition = React.forwardRef(function Transition(
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
+const CustomCategoryList = ({ ...params }) => {
+    const categoryList = _.uniqBy(params.params?.row.feedback, 'category');
 
-export const MainDataGrid = ({ rows, col }: { rows: any[], col: GridColDef[] }) => {
+    return (<div className='m-2'>
+        {categoryList?.length ?
+            categoryList?.map((feedback) => <span key={feedback?.category} className='my-2'><p className='text-xs font-normal'>{`${feedback?.category}.`}</p></span>) :
+            '-'}
+    </div>)
+}
+
+const CustomShowMoreCell = ({ ...params }) => {
 
     const [open, setOpen] = useState(false);
     const [selectedRow, setSelectedRow] = useState<GridRowParams<any>>();
 
-    const handleClickOpen = (params: GridRowParams<any>) => {
-        setSelectedRow(params);
+    const listOfFeedback = params.params.value.filter((feedback) => !!feedback.feedback);
+    const handleClickOpen = () => {
+        setSelectedRow(params.params);
         setOpen(true);
     };
 
@@ -103,27 +118,38 @@ export const MainDataGrid = ({ rows, col }: { rows: any[], col: GridColDef[] }) 
         setOpen(false);
     };
 
+
+    return (<div>
+        <Dialog
+            open={open}
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={handleClose}
+            aria-describedby="alert-dialog-slide-description"
+        >
+            <DialogTitle>{"Feedback given:"}</DialogTitle>
+            <DialogContent>
+                <div>
+                    {selectedRow?.row.feedback?.length ?
+                        selectedRow?.row.feedback?.map((feedback) => <div key={feedback.feedback} className='my-2'><p className='text-sm font-semibold'>{`${feedback?.feedback}.`}</p><p className='text-xs font-normal'>{`given by ${feedback?.givenBy}`}</p></div>) :
+                        'no feedback'}
+                </div>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={handleClose}>close</Button>
+            </DialogActions>
+        </Dialog>
+        <div className='row flex justify-center items-center'>
+            <div className='px-3' >{`${listOfFeedback?.length}`}</div>
+            <Button onClick={handleClickOpen} disabled={listOfFeedback < 1} color='info' className='text-blue-700 my-2'>{' Show more '}</Button>
+        </div>
+    </div>)
+}
+
+export const MainDataGrid = ({ rows, col }: { rows: any[], col: GridColDef[] }) => {
+
     return (
         <div className='bg-white p-4 rounded-md'>
-            <Dialog
-                open={open}
-                TransitionComponent={Transition}
-                keepMounted
-                onClose={handleClose}
-                aria-describedby="alert-dialog-slide-description"
-            >
-                <DialogTitle>{"Feedback given:"}</DialogTitle>
-                <DialogContent>
-                    <div>
-                        {selectedRow?.row.feedback?.length ? 
-                        selectedRow?.row.feedback?.map((feedback) => <div key={feedback.feedback} className='my-2'><p className='text-sm font-semibold'>{`${feedback?.feedback},`}</p><p className='text-xs font-normal'>{`given by ${feedback?.givenBy}`}</p></div>) : 
-                        'no feedback'}
-                    </div>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose}>close</Button>
-                </DialogActions>
-            </Dialog>
             <label className="text-lg font-semibold">{'Top Rated Employees'}</label>
             <Box sx={{ width: '100%', height: 400 }}>
                 <DataGrid
@@ -139,7 +165,6 @@ export const MainDataGrid = ({ rows, col }: { rows: any[], col: GridColDef[] }) 
                     checkboxSelection={false}
                     getRowId={(row) => row.ID}
                     disableRowSelectionOnClick
-                    onRowClick={(params) => handleClickOpen(params)}
                 />
             </Box>
         </div>

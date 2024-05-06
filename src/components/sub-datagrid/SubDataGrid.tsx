@@ -43,7 +43,7 @@ export const columnsVotedFrequently: GridColDef<IResponsesOtherCases>[] = [
 export const SubDataGrid = ({ rows, votingType }: { rows: any[], votingType: DatagridType }) => {
 
     return (
-        <Box sx={{ width: '100%', height: rows.length > 0 ? 300 : 120 }}>
+        <Box sx={{ width: '100%', height: 300 }}>
             <DataGrid
                 rows={rows}
                 columns={votingType === DatagridType.selfVoted ? columnsSelfVoted : columnsVotedFrequently}
