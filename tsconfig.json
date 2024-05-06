@@ -1,21 +1,24 @@
 {
-    "compilerOptions": {
-      "target": "es5",                    // Specify ECMAScript target version
-      "module": "commonjs",               // Specify module system
-      "strict": true,                     // Enable strict type-checking
-      "esModuleInterop": true,             // Enable compatibility with CommonJS-style imports
-      "skipLibCheck": true,                // Skip type checking of declaration files
-      "forceConsistentCasingInFileNames": true,  // Enforce consistent casing in file names
-      "outDir": "./dist",                  // Specify output directory for compiled files
-      "rootDir": "./src",                  // Specify root directory of source files
-      "declaration": true,                 // Generate corresponding .d.ts files
-      "sourceMap": true                    // Generate source maps
+  "compilerOptions": {
+    "baseUrl": "src",                                    /* Specify the base directory to resolve non-relative module names. */
+    "paths": {                                           /* Specify a set of entries that re-map imports to additional lookup locations. */
+      "@/*": ["./*"],
     },
-    "include": [
-      "src/**/*.ts"                       // Specify files to be included in compilation
-    ],
-    "exclude": [
-      "node_modules"                      // Specify files to be excluded from compilation
-    ]
-  }
-  
+    "target": "es5",                    // Specify ECMAScript target version
+    "module": "commonjs",               // Specify module system
+    "strict": true,                     // Enable strict type-checking
+    "esModuleInterop": true,             // Enable compatibility with CommonJS-style imports
+    "skipLibCheck": true,                // Skip type checking of declaration files
+    "forceConsistentCasingInFileNames": true,  // Enforce consistent casing in file names
+    "outDir": "./dist",                  // Specify output directory for compiled files
+    "rootDir": "./src",                  // Specify root directory of source files
+    "declaration": true,                 // Generate corresponding .d.ts files
+    "sourceMap": true,                    // Generate source maps
+  },
+  "include": [
+    "src/**/*.ts"                       // Specify files to be included in compilation
+  ],
+  "exclude": [
+    "node_modules"                      // Specify files to be excluded from compilation
+  ]
+}
