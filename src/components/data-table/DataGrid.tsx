@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
-import { DataGrid, GridColDef, GridRowParams } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRowParams, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Slide } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
 import * as _ from 'lodash';
@@ -81,6 +81,9 @@ export const columnsRes: GridColDef[] = [
         resizable: true,
         type: 'string',
         renderCell: (params) => <CustomCategoryList params={params} />,
+        valueGetter: (params) => {
+            return _.uniqBy(params.row?.feedback, 'category').map((value) => value?.category).join(', ')
+        }
     },
 ];
 
@@ -146,6 +149,15 @@ const CustomShowMoreCell = ({ ...params }) => {
     </div>)
 }
 
+
+function CustomToolbar() {
+    return (
+      <GridToolbarContainer>
+        <GridToolbarExport />
+      </GridToolbarContainer>
+    );
+  }
+  
 export const MainDataGrid = ({ rows, col }: { rows: any[], col: GridColDef[] }) => {
 
     return (
@@ -155,6 +167,7 @@ export const MainDataGrid = ({ rows, col }: { rows: any[], col: GridColDef[] }) 
                 <DataGrid
                     rows={rows}
                     columns={col}
+                    slots={{ toolbar: CustomToolbar }} 
                     initialState={{
                         pagination: {
                             paginationModel: {
