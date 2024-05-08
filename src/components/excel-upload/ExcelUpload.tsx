@@ -33,7 +33,7 @@ export const ExcelUpload: FC<ExcelUploadProps> = ({ setSheetData, analyzePulledD
             const sheetName = workbook.SheetNames[0];
             const sheet = workbook.Sheets[sheetName];
             const jsonData = utils.sheet_to_json<any>(sheet);
-            const filtered = dateRange ? filterByDateRange(jsonData, dateRange) : jsonData;
+            const filtered = dateRange ? filterByDateRange(jsonData, dateRange).filter((data) => !!data.whom) : jsonData;
 
             setSheetData(filtered);
             analyzePulledData(filtered);
@@ -44,7 +44,7 @@ export const ExcelUpload: FC<ExcelUploadProps> = ({ setSheetData, analyzePulledD
     return (
         <div className="flex flex-row text-center gap-1 items-center cursor-pointer">
             <input id="file-upload" accept=".xlsx" type="file" onChange={handleFileChange} className="flex h-10 w-2/3 rounded-md border border-input bg-white px-3 py-2 text-sm text-gray-400 file:border-0 file:bg-transparent file:text-gray-600 file:text-sm file:font-medium" />
-            <Button disabled={!file || sheetData?.length} variant="contained" onClick={handleFileUpload}>{'Upload Now'}</Button>
+            <Button disabled={!file || (!!sheetData?.length && sheetData?.length > 0)} variant="contained" onClick={handleFileUpload}>{'Upload Now'}</Button>
             {loading && <div className='pb-4'> <CircularProgress size={'xs'} /> </div>}
         </div>
     );

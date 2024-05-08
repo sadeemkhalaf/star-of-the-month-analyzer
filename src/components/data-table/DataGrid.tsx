@@ -69,7 +69,6 @@ export const columnsRes: GridColDef[] = [
         headerName: 'Feedback count',
         width: 200,
         editable: false,
-        resizable: true,
         type: 'actions',
         renderCell: (params) => <CustomShowMoreCell params={params} />,
     },
@@ -78,7 +77,6 @@ export const columnsRes: GridColDef[] = [
         headerName: 'Category',
         width: 300,
         editable: false,
-        resizable: true,
         type: 'string',
         renderCell: (params) => <CustomCategoryList params={params} />,
         valueGetter: (params) => {
