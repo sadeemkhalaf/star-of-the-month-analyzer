@@ -3,6 +3,7 @@ deployed on: https://dmestarofthemonth.netlify.app
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 Find the template file in the project, upload and test!
-in order to use this, use Microsoft teams form or any other form but you must use the same template as in the example from the project 
-ID |	completionTime	| startTime |	email |	feedback	| name	| rating |	whom |	category																	
-1	2025-01-23 10:15:00	2025-01-23 09:55:00	jsmith@example.com	Great support, quick resolution.	John Smith	5	David Parker	Performance														
+in order to use this, use Microsoft teams form or any other form but you must use the same template as in the example from the project:
+
+
+ID |	completionTime	| startTime |	email |	feedback	| name	| rating |	whom |	category																											
