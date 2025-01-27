@@ -72,6 +72,7 @@
     }
     body {
       /* @apply ybg-background ytext-foreground; */
+      background-color: #E9E6DB;
     }
   }
 
@@ -82,7 +83,7 @@
       sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #e5e7eb;
+    background-color: #E9E6DB;
   }
   
   code {
